@@ -35,5 +35,9 @@ function countOutputs(outputs, lengths) {
     return count;
 }
 const lengths = [2, 4, 3, 7];
-console.log(countOutputs(data.outputs, lengths));
+// console.log(countOutputs(data.outputs, lengths));
+
+// ==============
+// Day_7 - Part 2
+// ==============
 
