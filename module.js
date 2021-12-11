@@ -166,3 +166,20 @@ exports.extractHorizontalPositions = extractHorizontalPositions;
 // Day_8 ======================================================
 // ============================================================
 
+function extractEntries(filepath) {
+    const data = fs.readFileSync(filepath, 'utf8');
+    const entries = data.split('\n');
+    const signals = [];
+    const outputs = [];
+    for(let i = 0; i < entries.length; i++) {
+        let temp = entries[i].split(' | ');
+        signals.push(temp[0]);
+        outputs.push(temp[1]);
+    }
+    return {
+        signals: signals, 
+        outputs: outputs
+    };
+}
+
+exports.extractEntries = extractEntries;
