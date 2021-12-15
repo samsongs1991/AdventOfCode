@@ -2,25 +2,25 @@ const Module = require('../module.js');
 const data = Module.extractEntries('./data.txt');
 const testData = Module.extractEntries('./testData.txt');
 
-// const testSignals = [acedgfb,cdfbe,gcdfa,fbcad,dab,cefabd,cdfgeb,eafb,cagedb,ab];
-// const testOutputs = [cdfeb,fcadb,cdfeb,cdbaf]
+const testSignal = ['acedgfb','cdfbe','gcdfa','fbcad','dab','cefabd','cdfgeb','eafb','cagedb','ab'];
+// const testOutput = [cdfeb,fcadb,cdfeb,cdbaf]
 
 // ==============
 // Day_7 - Part 1
 // ==============
 
-const code = {
-    0: ['a', 'b', 'c',      'e', 'f', 'g'], // 6 
-    1: [          'c',           'f'     ], // 2 *
-    2: ['a',      'c', 'd', 'e',      'g'], // 5 
-    3: ['a',      'c', 'd',      'f', 'g'], // 5 
-    4: ['b',      'c', 'd',      'f'     ], // 4 *
-    5: ['a', 'b',      'd',      'f', 'g'], // 5 
-    6: ['a', 'b',      'd', 'e', 'f', 'g'], // 6 
-    7: ['a',      'c',           'f'     ], // 3 *
-    8: ['a', 'b', 'c', 'd', 'e', 'f', 'g'], // 7 *
-    9: ['a', 'b', 'c', 'd',      'f', 'g']  // 6
-}
+const code = [
+    'abcefg', 
+    'cf',
+    'acdeg', // 5 
+    'acdfg', // 5
+    'bcdf',
+    'abdfg', // 5 
+    'abdefg', 
+    'acf',
+    'abcdefg',
+    'abcdfg'
+];
 
 function countOutputs(outputs, lengths) {
     let count = 0;
@@ -35,7 +35,7 @@ function countOutputs(outputs, lengths) {
     return count;
 }
 const lengths = [2, 4, 3, 7];
-// console.log(countOutputs(data.outputs, lengths));
+console.log(countOutputs(data.outputs, lengths));
 
 // ==============
 // Day_7 - Part 2
