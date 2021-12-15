@@ -41,14 +41,8 @@ console.log(countOutputs(data.outputs, lengths));
 // Day_7 - Part 2
 // ==============
 
-// set 1: difference between 'cf' and 'acf' (a) is pos 0 while 'cf' will be pos 2/5
-// set 1: difference between 'cf' and 'bcdf' (bd) is pos 1/3
-// set 2: the one with 'acf' and 'b or d' = 3 --> switch pos of 'b or d' to 3 and the other to pos 1, the last char (g) is pos 6
-// set 2: the one with 'a' and 'bd' and 'g' = 5 --> the other char (f) is pos 5 while 'c' is pos 2
-// set 2: the last segment = 2 --> the unique char (e) is pos 4
-// set 3: use the correct wiring pattern to know what 0/6/9 are
-
-const wiring = new Array(7);
+const WIRING = new Array(7);
+const CODE = {};
 
 function findSet1(signal) {
     let set1 = [];
@@ -89,27 +83,86 @@ function findSegmentOfLength(signal, num) {
     let result = null;
     signal.forEach(segment => {
         if(segment.length === num) {
-            result = segment;
+            result = segment.split('').sort().join('');
+        }
+    });
+    return result;
+}
+function findSingleDiff(str1, str2) {
+    const count = {a:0, b:0, c:0, d:0, e:0, f:0, g:0};
+    str1.split('').forEach(char => count[char]++);
+    str2.split('').forEach(char => count[char]--);
+    for(let k in count) {
+        if(count[k] !== 0 ) { return k }
+    }
+}
+function findAllDiffs(str1, str2) {
+    const count = {a:0, b:0, c:0, d:0, e:0, f:0, g:0};
+    str1.split('').forEach(char => count[char]++);
+    str2.split('').forEach(char => count[char]--);
+    let diffs = '';
+    for(let k in count) {
+        if(count[k] !== 0 ) { diffs += k }
+    }
+    return diffs
+}
+function findSegmentWithChars(signal, ...args) {
+    args = args.join('');
+    let result = null;
+    signal.forEach(segment => {
+        let found = true;
+        for(let i = 0; i < args.length; i++) {
+            let char = args[i];
+            if(!segment.includes(char)) {
+                found = false;
+            }
+        }
+        if(found) {
+            result = segment.split('').sort().join('');
         }
     });
     return result;
 }
 function loadSet1(signal) {
+    // set 1: difference between 'cf' and 'acf' (a) is pos 0 while 'cf' will be pos 2/5
+    // set 1: difference between 'cf' and 'bcdf' (bd) is pos 1/3
     let one = findSegmentOfLength(signal, 2);
     let four = findSegmentOfLength(signal, 4);
     let seven = findSegmentOfLength(signal, 3);
     let eight = findSegmentOfLength(signal, 7);
-    console.log("one", one);
-    console.log("four", four);
-    console.log("seven", seven);
-    console.log("eight", eight);
-    
+    let a = findSingleDiff(one, seven);
+    // let cf = one; // pos 2/5
+    // let bd = findAllDiffs(one, four); // pos 1/3
+    WIRING[0] = a;
+    CODE[one] = '1';
+    CODE[four] = '4';
+    CODE[seven] = '7';
+    CODE[eight] = '8';
 }
 function loadSet2(signal) {
-    
+    // set 2: the one with 'acf' and 'b or d' = 3 --> switch pos of 'b or d' to 3 and the other to pos 1, the last char (g) is pos 6
+    // set 2: the one with 'a' and 'bd' and 'g' = 5 --> the other char (f) is pos 5 while 'c' is pos 2
+    // set 2: the last segment = 2 --> the unique char (e) is pos 4
+    let acf = findSegmentOfLength(signal, 3);
+    let bd = findAllDiffs(findSegmentOfLength(signal, 2), findSegmentOfLength(signal, 4));
+    let b = bd[0];
+    let d = bd[1];
+    let three = findSegmentWithChars(set2, acf, b);
+    if(three) {
+        // switch pos of b/d to 3 and other to 1
+        WIRING[3] = b;
+        WIRING[1] = d;
+    } else {
+        three = findSegmentWithChars(set2, acf, d);
+        // switch pos of b/d to 3 and other to 1
+        WIRING[3] = d;
+        WIRING[1] = b;
+    } 
+    CODE[three] = '3';
+    // last char = pos 6
 }
 function loadSet3(signal) {
-    
+    // set 3: use the correct wiring pattern to know what 0/6/9 are
 }
 loadSet1(code);
 loadSet2(code);
