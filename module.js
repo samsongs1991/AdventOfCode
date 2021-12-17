@@ -183,3 +183,13 @@ function extractEntries(filepath) {
 }
 
 exports.extractEntries = extractEntries;
+
+// ============================================================
+// Day_9 ======================================================
+// ============================================================
+
+// function extract(filepath) {
+//     const data = fs.readFileSync(filepath, 'utf8');
+// }
+
+// exports.extract = extract;

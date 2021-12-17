@@ -6,7 +6,7 @@ const testData = Module.extractEntries('./testData.txt');
 // const testOutput = [cdfeb,fcadb,cdfeb,cdbaf]
 
 // ==============
-// Day_7 - Part 1
+// Day_8 - Part 1
 // ==============
 
 const code = [
@@ -40,7 +40,7 @@ const lengths = [2, 4, 3, 7];
 // console.log(countOutputs(data.outputs, lengths));
 
 // ==============
-// Day_7 - Part 2
+// Day_8 - Part 2
 // ==============
 
 function findSet1(signal) {
