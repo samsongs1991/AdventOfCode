@@ -188,8 +188,12 @@ exports.extractEntries = extractEntries;
 // Day_9 ======================================================
 // ============================================================
 
-// function extract(filepath) {
-//     const data = fs.readFileSync(filepath, 'utf8');
-// }
+function extractHeightMap(filepath) {
+    const data = fs.readFileSync(filepath, 'utf8');
+    let map = data.split('\n');
+    map = map.map(row => { return row.split('') });
+    map = map.map(row => { return row.map(ht => { return parseInt(ht) }) });
+    return map;
+}
 
-// exports.extract = extract;
+exports.extractHeightMap = extractHeightMap;
