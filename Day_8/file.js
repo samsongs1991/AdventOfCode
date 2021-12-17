@@ -75,9 +75,9 @@ function findSet3(signal) {
 const set1 = findSet1(code);
 const set2 = findSet2(code);
 const set3 = findSet3(code);
-console.log(set1);
-console.log(set2);
-console.log(set3);
+console.log('set1', set1);
+console.log('set2', set2);
+console.log('set3', set3);
 
 function findSegmentOfLength(signal, num) {
     let result = null;
@@ -144,25 +144,45 @@ function loadSet2(signal) {
     // set 2: the one with 'a' and 'bd' and 'g' = 5 --> the other char (f) is pos 5 while 'c' is pos 2
     // set 2: the last segment = 2 --> the unique char (e) is pos 4
     let acf = findSegmentOfLength(signal, 3);
+    let a = findSingleDiff(findSegmentOfLength(signal, 2), findSegmentOfLength(signal, 3));
     let bd = findAllDiffs(findSegmentOfLength(signal, 2), findSegmentOfLength(signal, 4));
     let b = bd[0];
     let d = bd[1];
+    let g = null;
+    // ====================
     let three = findSegmentWithChars(set2, acf, b);
     if(three) {
-        // switch pos of b/d to 3 and other to 1
         WIRING[3] = b;
         WIRING[1] = d;
+        g = findSingleDiff(acf + b, three);
     } else {
         three = findSegmentWithChars(set2, acf, d);
-        // switch pos of b/d to 3 and other to 1
         WIRING[3] = d;
         WIRING[1] = b;
+        g = findSingleDiff(acf + d, three);
     } 
     CODE[three] = '3';
-    // last char = pos 6
+    WIRING[6] = g;
+    // ====================
+    let five = findSegmentWithChars(set2, a, bd, g);
+    let f = findSingleDiff(a + bd + g, five);
+    let c = findSingleDiff(acf, a + f);
+    CODE[five] = '5';
+    WIRING[5] = f;
+    WIRING[2] = c;
+    // ====================
+    let two = null;
+    set2.forEach(segment => {
+        if(segment !== three && segment !== five) { two = segment }
+    });
+    let e = findSingleDiff(two, a + c + d +g);
+    CODE[two] = '2';
+    WIRING[4] = e;
+    // ====================
 }
 function loadSet3(signal) {
     // set 3: use the correct wiring pattern to know what 0/6/9 are
+    
 }
 loadSet1(code);
 loadSet2(code);
