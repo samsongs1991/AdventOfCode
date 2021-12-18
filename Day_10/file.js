@@ -114,28 +114,52 @@ function getIncompleteLines(data) {
 }
 
 function findCompletionPattern(line) {
-    
+    const stack = [];
+    for(let i = 0; i < line.length; i++) {
+        let char = line[i];
+        if(CHUNKS.open.includes(char)) {
+            stack.push(char);
+        } else {
+            stack.pop();
+        }
+    }
+    const completionPattern = [];
+    for(let i = 0; i < stack.length; i++) {
+        let char = stack[i];
+        let openIdx = CHUNKS.open.indexOf(char);
+        let close = CHUNKS.close[openIdx];
+        completionPattern.push(close);
+    }
+    return completionPattern;
 }
 
-function findCompletionPatternScore(line) {
+function findCompletionPatternScore(line) { // bug is that the completion pattern needs to be in reverse
     let score = 0;
     for(let i = 0; i < line.length; i++) {
         let char = line[i];
+        score *= 5;
+        console.log('=============')
+        console.log(char);
+        console.log(score);
         score += AUTOSCORE[char];
+        console.log(score);
     }
     return score;
 }
 
 function findTotalAutoCorrectScore(data) {
-    let sum = 0;
-    for(let i = 0; i < data.length; i++) {
+    const completionScores = [];
+    for(let i = data.length - 1; i < data.length; i++) { 
         let line = data[i];
         let completionPattern = findCompletionPattern(line);
-        sum += findCompletionPatternScore(completionPattern);
+        console.log(completionPattern);
+        let completionScore = findCompletionPatternScore(completionPattern);
+        console.log(completionScore);
     }
-    return sum;
+    console.log(completionScores);
+    // return ;
 }
 
 let incompleteLines = getIncompleteLines(testData);
-let sum = findTotalAutoCorrectScore(incompleteLlines);
+let sum = findTotalAutoCorrectScore(incompleteLines);
 console.log(sum);
