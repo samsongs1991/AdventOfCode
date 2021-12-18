@@ -197,3 +197,20 @@ function extractHeightMap(filepath) {
 }
 
 exports.extractHeightMap = extractHeightMap;
+
+// ============================================================
+// Day_10 =====================================================
+// ============================================================
+
+function extractSubsystem(filepath) {
+    const data = fs.readFileSync(filepath, 'utf8');
+    let subsystem = data.split('\n');
+    return subsystem;
+}
+
+exports.extractSubsystem = extractSubsystem;
+
+// ============================================================
+// Day_11 =====================================================
+// ============================================================
+
