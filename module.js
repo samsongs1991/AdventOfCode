@@ -214,3 +214,8 @@ exports.extractSubsystem = extractSubsystem;
 // Day_11 =====================================================
 // ============================================================
 
+// function extract(filepath) {
+//     const data = fs.readFileSync(filepath, 'utf8');
+// }
+
+// exports.extract = extract;
