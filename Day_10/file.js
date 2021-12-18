@@ -124,7 +124,7 @@ function findCompletionPattern(line) {
         }
     }
     const completionPattern = [];
-    for(let i = 0; i < stack.length; i++) {
+    for(let i = stack.length - 1; i >= 0; i--) {
         let char = stack[i];
         let openIdx = CHUNKS.open.indexOf(char);
         let close = CHUNKS.close[openIdx];
@@ -133,33 +133,49 @@ function findCompletionPattern(line) {
     return completionPattern;
 }
 
-function findCompletionPatternScore(line) { // bug is that the completion pattern needs to be in reverse
+function findCompletionPatternScore(line) { 
     let score = 0;
     for(let i = 0; i < line.length; i++) {
         let char = line[i];
         score *= 5;
-        console.log('=============')
-        console.log(char);
-        console.log(score);
         score += AUTOSCORE[char];
-        console.log(score);
     }
     return score;
 }
 
-function findTotalAutoCorrectScore(data) {
+function findAutoCorrectScores(data) {
     const completionScores = [];
-    for(let i = data.length - 1; i < data.length; i++) { 
+    for(let i = 0; i < data.length; i++) { 
         let line = data[i];
         let completionPattern = findCompletionPattern(line);
-        console.log(completionPattern);
-        let completionScore = findCompletionPatternScore(completionPattern);
-        console.log(completionScore);
+        let score = findCompletionPatternScore(completionPattern);
+        completionScores.push(score);
     }
-    console.log(completionScores);
-    // return ;
+    return completionScores;
 }
 
-let incompleteLines = getIncompleteLines(testData);
-let sum = findTotalAutoCorrectScore(incompleteLines);
-console.log(sum);
+function sortNums(nums) {
+    let sorted = [];
+    let length = nums.length;
+    while(sorted.length < length) {
+        let low = nums[0];
+        nums.forEach(num => {
+            if(num < low) { low = num }
+        });
+        let lowIdx = nums.indexOf(low);
+        sorted.push(low);
+        nums = nums.slice(0, lowIdx).concat(nums.slice(lowIdx + 1));
+    }
+    return sorted;
+}
+
+function findMedian(nums) {
+    nums = sortNums(nums);
+    let idx = Math.floor(nums.length / 2);
+    return nums[idx];
+}
+
+let incompleteLines = getIncompleteLines(data);
+let autocorrectScores = findAutoCorrectScores(incompleteLines);
+let median = findMedian(autocorrectScores);
+console.log(median);
