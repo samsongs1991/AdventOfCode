@@ -70,13 +70,72 @@ function findTotalSyntaxErrorScore(data) {
     return sum;
 }
 
-let sum = findTotalSyntaxErrorScore(data);
-console.log('========================================');
-console.log('Total syntax error score is', sum);
-console.log('========================================');
+// let sum = findTotalSyntaxErrorScore(data);
+// console.log('========================================');
+// console.log('Total syntax error score is', sum);
+// console.log('========================================');
 
 // ===============
 // Day_10 - Part 2
 // ===============
 
+const AUTOSCORE = {
+    ')': 1, 
+    ']': 2, 
+    '}': 3, 
+    '>': 4,
+}
 
+function isIncompleteLine(line) {
+    const stack = [];
+    for(let i = 0; i < line.length; i++) {
+        let char = line[i];
+        if(CHUNKS.open.includes(char)) {
+            stack.push(char);
+        } else {
+            let last = stack[stack.length - 1];
+            if(isValidClose(last, char)) {
+                stack.pop();
+            } else {
+                return false;
+            }
+        }
+    }
+    return stack.length !== 0;
+}
+
+function getIncompleteLines(data) {
+    const incompleteLines = [];
+    for(let i = 0; i < data.length; i++) {
+        let line = data[i];
+        if(isIncompleteLine(line)) { incompleteLines.push(line) }
+    }
+    return incompleteLines;
+}
+
+function findCompletionPattern(line) {
+    
+}
+
+function findCompletionPatternScore(line) {
+    let score = 0;
+    for(let i = 0; i < line.length; i++) {
+        let char = line[i];
+        score += AUTOSCORE[char];
+    }
+    return score;
+}
+
+function findTotalAutoCorrectScore(data) {
+    let sum = 0;
+    for(let i = 0; i < data.length; i++) {
+        let line = data[i];
+        let completionPattern = findCompletionPattern(line);
+        sum += findCompletionPatternScore(completionPattern);
+    }
+    return sum;
+}
+
+let incompleteLines = getIncompleteLines(testData);
+let sum = findTotalAutoCorrectScore(incompleteLlines);
+console.log(sum);
