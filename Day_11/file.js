@@ -13,7 +13,7 @@ const DIRS = [
 ]
 
 function isValidPos(array, pos) {
-    return array[pos[0]] && array[pos[0]][pos[1]];
+    return array[pos[0]] && array[pos[0]][pos[1]] ? true : false;
 }
 
 function incrementSurroundings(map, pos) {
