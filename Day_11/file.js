@@ -87,8 +87,8 @@ function simulateNumSteps(map, num) {
     return flashes;
 }
 
-// let flashes = simulateNumSteps(data, 100);
-// console.log(flashes);
+let flashes = simulateNumSteps(data, 100);
+console.log(flashes);
 
 // ===============
 // Day_11 - Part 2
@@ -107,8 +107,13 @@ function allZeros(map) {
 }
 
 function findSynchDischargeStep(map) {
-    
+    let step = 0;
+    while(!allZeros(map)) {
+        simulateSingleStep(map);
+        step++;
+    }
+    return step;
 }
 
-let step = findSynchDischargeStep(map);
+let step = findSynchDischargeStep(data);
 console.log(step);
