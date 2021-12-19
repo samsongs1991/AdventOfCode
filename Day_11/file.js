@@ -16,15 +16,17 @@ function isValidPos(array, pos) {
     return array[pos[0]] && array[pos[0]][pos[1]] ? true : false;
 }
 
-function incrementSurroundings(map, pos) {
-    
+function increment(map, pos) {
+    // recursive fn
+    // if map[pos] is 9 => increment to 0 and recursively call self on all valid DIRS
+    // else increment map[pos] +1
 }
 
 function simulateSingleStep(energyLvls) {
     let newEnergyLvls = energyLvls.map(row => row.slice());
     for(let i = 0; i < newEnergyLvls.length; i++) {
         for(let j = 0; j < newEnergyLvls[i].length; j++) {
-            if(newEnergyLvls[i][j] === 9) { incrementSurroundings(newEnergyLvls, [i, j]) }
+            increment(newEnergyLvls, [i, j]);
         }
     }
     return newEnergyLvls;
