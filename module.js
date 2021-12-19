@@ -214,8 +214,11 @@ exports.extractSubsystem = extractSubsystem;
 // Day_11 =====================================================
 // ============================================================
 
-// function extract(filepath) {
-//     const data = fs.readFileSync(filepath, 'utf8');
-// }
+function extractEnergyLvls(filepath) {
+    const data = fs.readFileSync(filepath, 'utf8');
+    let energyLvls = data.split('\n');
+    energyLvls = energyLvls.map(row => row = row.split('').map(num => parseInt(num)) );
+    return energyLvls;
+}
 
-// exports.extract = extract;
+exports.extractEnergyLvls = extractEnergyLvls;

@@ -1,6 +1,6 @@
 const Module = require('../module.js');
-// const data = Module.extract('./data.txt');
-// const testData = Module.extract('./testData.txt');
+const data = Module.extractEnergyLvls('./data.txt');
+const testData = Module.extractEnergyLvls('./testData.txt');
 
 // ===============
 // Day_11 - Part 1
