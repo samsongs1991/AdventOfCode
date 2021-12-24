@@ -227,11 +227,12 @@ exports.extractEnergyLvls = extractEnergyLvls;
 // Day_12 =====================================================
 // ============================================================
 
-// function extract(filepath) {
-//     const data = fs.readFileSync(filepath, 'utf8');
-// }
+function extractCaveMap(filepath) {
+    const data = fs.readFileSync(filepath, 'utf8');
+    return data.split('\n').map(path => path.split('-'));
+}
 
-// exports.extract = extract;
+exports.extractCaveMap = extractCaveMap;
 
 // ============================================================
 // Day_13 =====================================================
