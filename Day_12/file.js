@@ -26,6 +26,8 @@ class Cave {
         return this.paths;
     }
     
+    
+    
 }
 
 let A = new Cave("A");
